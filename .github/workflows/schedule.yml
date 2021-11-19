@@ -1,0 +1,20 @@
+name: Run bot with cron
+on:
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron: "0 9 * * *"
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+      - run: npm install
+
+      - name: Run sleepy-bot
+        uses: actions/github-script@v4
+        env:
+          SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+        with:
+          script: |
+            require('./index.js')
