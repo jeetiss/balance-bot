@@ -6,9 +6,9 @@ const token = process.env.SLACK_TOKEN;
 // Initialize
 const web = new WebClient(token);
 
-const channel = "C02MMB5MMNW";
+const channel = "C028CMVJUH3";
 
-// "C028CMVJUH3";
+// "C02MMB5MMNW";
 
 const fridayMessage = (names) =>
   `Hey ${names}, it seems that you are still working) If this task is not so critical, you can continue on Monday. Try to relax and have a nice weekends. Yours, sleepy bot :sleeping:`;
