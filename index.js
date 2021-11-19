@@ -31,7 +31,7 @@ const message = (names) => {
     const members = await web.conversations.members({ channel });
 
     if (members.ok) {
-      const onlineUsers = await Promise.all(
+      const users = await Promise.all(
         members.members.map(async (member) => {
           const isHere = await web.users.getPresence({ user: member });
           if (isHere.ok && (isHere.presence === "active" || isHere.online)) {
@@ -42,18 +42,21 @@ const message = (names) => {
         })
       );
 
-      const textNames = onlineUsers
-        .filter(Boolean)
-        .map((user) => `<@${user}>`)
-        .join(" ");
+      const onlineUsers = users.filter(Boolean);
 
-      const result = await web.chat.postMessage({
-        text: message(textNames),
-        channel,
-      });
+      if (onlineUsers.length > 0) {
+        const textNames = onlineUsers.map((user) => `<@${user}>`).join(" ");
 
-      if (result.ok) {
-        console.log("✅ message sent");
+        const result = await web.chat.postMessage({
+          text: message(textNames),
+          channel,
+        });
+
+        if (result.ok) {
+          console.log("✅ message sent");
+        }
+      } else {
+        console.log("⏺ no users online");
       }
     }
   } catch (error) {
