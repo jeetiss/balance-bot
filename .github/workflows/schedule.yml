@@ -2,7 +2,7 @@ name: Run bot with cron
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron: "0 17 * * *"
+    - cron: "0 18 * * *"
 jobs:
   job:
     runs-on: ubuntu-latest
